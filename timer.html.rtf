@@ -1,0 +1,83 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2759
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Temporizador Simple</title>\
+    <style>\
+        body \{\
+            font-family: Arial, sans-serif;\
+            display: flex;\
+            flex-direction: column;\
+            align-items: center;\
+            gap: 10px;\
+            margin-top: 20px;\
+        \}\
+        #temporizador \{\
+            font-size: 20px;\
+        \}\
+        button \{\
+            cursor: pointer;\
+        \}\
+    </style>\
+</head>\
+<body>\
+\
+<div id="temporizador">05:00</div>\
+<button id="startBtn">Start</button>\
+<button id="retryBtn" style="display:none;">Retry</button>\
+\
+<script>\
+    var temporizador;\
+    var minutes = 5;\
+    var seconds = 0;\
+\
+    document.getElementById('startBtn').addEventListener('click', function() \{\
+        if (!temporizador) \{\
+            // Inicia el temporizador\
+            this.style.display = 'none'; // Oculta el bot\'f3n de inicio\
+            document.getElementById('retryBtn').style.display = 'inline'; // Muestra el bot\'f3n de reinicio\
+            temporizador = setInterval(actualizarTemporizador, 1000);\
+        \}\
+    \});\
+\
+    document.getElementById('retryBtn').addEventListener('click', function() \{\
+        clearInterval(temporizador);\
+        temporizador = null;\
+        minutes = 5;\
+        seconds = 0;\
+        document.getElementById('temporizador').textContent = "05:00";\
+        document.getElementById('startBtn').style.display = 'inline'; // Muestra el bot\'f3n de inicio\
+        this.style.display = 'none'; // Oculta el bot\'f3n de reinicio\
+    \});\
+\
+    function actualizarTemporizador() \{\
+        seconds--;\
+        if (seconds < 0) \{\
+            seconds = 59;\
+            minutes--;\
+        \}\
+\
+        document.getElementById('temporizador').textContent = \
+            (minutes > 9 ? minutes : "0" + minutes) + ":" + \
+            (seconds > 9 ? seconds : "0" + seconds);\
+\
+        if (minutes < 0) \{\
+            clearInterval(temporizador);\
+            temporizador = null;\
+            document.getElementById('temporizador').textContent = "00:00";\
+            alert("\'a1Tiempo terminado!");\
+            document.getElementById('retryBtn').click(); // Reinicia el temporizador autom\'e1ticamente\
+        \}\
+    \}\
+</script>\
+\
+</body>\
+</html>}
